@@ -1,7 +1,8 @@
 // import { Button } from "cs2/ui"
 // import { bindValue, trigger, useValue } from "cs2/api"
 import { ModuleRegistryExtend, getModule } from "cs2/modding"
-import { useLocalization } from "cs2/l10n"
+import { tool } from "cs2/bindings"
+// import { useLocalization } from "cs2/l10n"
 import classNames from "classnames"
 
 import trafficIcon from "images/sample-1.svg"
@@ -14,7 +15,7 @@ const ToolbarIcon: ModuleRegistryExtend = (Component: any) => {
         const { children, ...otherProps } = props || {}
         
         // const markerVisible: boolean = useValue(markerVisible$)
-        const { translate } = useLocalization()
+        // const { translate } = useLocalization()
 
         const ToolButtonElm = getModule("game-ui/game/components/tool-options/tool-button/tool-button.tsx", "ValueToolButton")({
             selected: true,
@@ -36,13 +37,13 @@ const ToolbarIcon: ModuleRegistryExtend = (Component: any) => {
 
         const DummyComponent = () => <div className={classNames(styles.bgGreen, styles.cGold)}>This is just for testing</div>
 
-        console.log("SectionElm", SectionElm)
-
         return (
             <>
-                <DummyComponent />
-                {SectionElm}
-                {/* <SectionElm /> */}
+                {tool.activeTool$.value.id === tool.NET_TOOL && <>
+                    <DummyComponent />
+                    {SectionElm}
+                    {/* <SectionElm /> */}
+                </>}
                 <Component {...otherProps} />
             </>
         )
